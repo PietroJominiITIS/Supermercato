@@ -51,23 +51,23 @@ public class Prodotto {
   public static Prodotto fromVector(Vector<String> in) {
     Prodotto p = new Prodotto();
 
-    p.reparto = (in.get(0) == "") ? null : Reparto.valueOf(in.get(0));
+    p.reparto = (in.get(0).equals("")) ? null : Reparto.valueOf(in.get(0));
 
-    p.categoria = (in.get(1) == "") ? null : in.get(1);
-    p.scaffale = (in.get(2) == "") ? null : in.get(2);
-    p.nome = (in.get(3) == "") ? null : in.get(3);
-    p.produttore = (in.get(4) == "") ? null : in.get(4);
-    p.unitàMisura = (in.get(5) == "") ? null : in.get(5);
-    p.responsabile = (in.get(6) == "") ? null : in.get(6);
-    p.telefono = (in.get(7) == "") ? null : in.get(7);
+    p.categoria = (in.get(1).equals("")) ? null : in.get(1);
+    p.scaffale = (in.get(2).equals("")) ? null : in.get(2);
+    p.nome = (in.get(3).equals("")) ? null : in.get(3);
+    p.produttore = (in.get(4).equals("")) ? null : in.get(4);
+    p.unitàMisura = (in.get(5).equals("")) ? null : in.get(5);
+    p.responsabile = (in.get(6).equals("")) ? null : in.get(6);
+    p.telefono = (in.get(7).equals("")) ? null : in.get(7);
 
-    p.quantità = (in.get(8) == "") ? -1 : Integer.parseInt(in.get(8));
-    p.codice = (in.get(9) == "") ? -1 : Integer.parseInt(in.get(9));
+    p.quantità = (in.get(8).equals("")) ? -1 : Integer.parseInt(in.get(8));
+    p.codice = (in.get(9).equals("")) ? -1 : Integer.parseInt(in.get(9));
 
-    p.prezzo = (in.get(10) == "") ? -1 : Double.parseDouble(in.get(10));
-    p.sconto = (in.get(11) == "") ? -1 : Double.parseDouble(in.get(11));
+    p.prezzo = (in.get(10).equals("")) ? -1 : Double.parseDouble(in.get(10));
+    p.sconto = (in.get(11).equals("")) ? -1 : Double.parseDouble(in.get(11));
 
-    if (in.get(12) != "") {
+    if (!in.get(12).equals("")) {
       SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
       p.scadenza = new GregorianCalendar();
       try {

@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 import java.util.function.Predicate;
@@ -69,6 +71,40 @@ public class Supermercato {
         prodotti.remove(i);
         return p;
       }
+    }
+    return null;
+  }
+
+  // Serialization
+  public void save(String nomefile) {
+    Vector<Vector<String>> rows = new Vector<>();
+
+    for (Prodotto p : prodotti) {
+      rows.add(p.toVector());
+    }
+
+    try {
+      CSV.to(nomefile, rows);
+    } catch (IOException e) {
+      System.out.println("IOException while saving! That shouldn't happen...");
+    }
+  }
+
+  // Deserialization
+  public static Supermercato load(String nomefile) {
+    try {
+      Supermercato s = new Supermercato();
+
+      for (Vector<String> row : CSV.from(nomefile)) {
+        Prodotto p = Prodotto.fromVector(row);
+        s.add(p, p.codice);
+      }
+
+      return s;
+    } catch (FileNotFoundException e) {
+      System.out.println("Il file [" + nomefile + "] non esiste...");
+    } catch (IOException e) {
+      System.out.println("IOException while loading! That shouldn't happen...");
     }
     return null;
   }
