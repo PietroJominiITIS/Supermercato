@@ -16,20 +16,24 @@ public class Supermercato {
 
   // C: create
   private void add(Prodotto p, int codice) {
+    codiceCorrente = codice;
     p.codice = codice;
     prodotti.add(p);
   }
 
   public void add(Prodotto p) {
-    this.add(p, ++codiceCorrente);
+    this.add(p, codiceCorrente + 1);
   }
 
   // R : read
   public Vector<Prodotto> getAs(Predicate<Prodotto> cmp) {
     Vector<Prodotto> results = new Vector<>();
     for (Prodotto p : prodotti) {
-      if (cmp.test(p))
-        results.add(p);
+      try {
+        if (cmp.test(p))
+          results.add(p);
+      } catch (NullPointerException e) {
+      }
     }
     return results;
   }
@@ -50,6 +54,10 @@ public class Supermercato {
     return this.getAs(p -> p.scadenza.equals(scadenza));
   }
 
+  public Vector<Prodotto> get(Reparto r) {
+    return this.getAs(p -> p.reparto == r);
+  }
+
   // U: update
   public boolean update(int codice, Prodotto np) {
     for (int i = 0; i < prodotti.size(); i++) {
@@ -64,7 +72,7 @@ public class Supermercato {
   }
 
   // D: delete
-  public Prodotto delete(int codice, Predicate<Prodotto> cmp) {
+  public Prodotto delete(int codice) {
     for (int i = 0; i < prodotti.size(); i++) {
       Prodotto p = prodotti.get(i);
       if (p.codice == codice) {
@@ -91,7 +99,7 @@ public class Supermercato {
   }
 
   // Deserialization
-  public static Supermercato load(String nomefile) {
+  public static Supermercato load(String nomefile) throws FileNotFoundException {
     try {
       Supermercato s = new Supermercato();
 
@@ -101,8 +109,6 @@ public class Supermercato {
       }
 
       return s;
-    } catch (FileNotFoundException e) {
-      System.out.println("Il file [" + nomefile + "] non esiste...");
     } catch (IOException e) {
       System.out.println("IOException while loading! That shouldn't happen...");
     }
@@ -110,6 +116,7 @@ public class Supermercato {
   }
 
   // Others
+  @Override
   public String toString() {
     String out = "";
     for (Prodotto p : prodotti) {

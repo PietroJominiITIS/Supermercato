@@ -1,0 +1,105 @@
+Supermercato CLI
+
+USAGE:
+  $ java Main [ OPTIONS ] get|add|update|delete
+
+OPTIONS:
+  -f | --filename $name :: string { default: supermercato.csv }
+
+  EXAMPLES:
+    $ java Main -f pincopallino.csv ...
+    $ java Main --filename pincopallino.csv ...
+
+get:
+  $ java Main [ OPTIONS ] get [ $index | $field value ]
+
+  $index :: integer
+  $field :: 
+    | codice ---------> value :: integer
+    | nome -----------> value :: string
+    | reparto --------> value :: Reparto
+    | responsabile ---> value :: string
+
+  EXAMPLES:
+    $ java Main get
+    $ java Main get 1
+    $ java Main get codice 1
+    $ java Main get nome prodotto_123
+    $ java Main get reparto UTENSILERIA
+    $ java Main get responsabile MarioRossi
+
+add:
+  $ java Main [ OPTIONS ] add [ $field=value [ $field=value [ ... ] ] ]
+
+  $field :: 
+    | reparto --------> value :: Reparto
+    | categoria ------> value :: string
+    | scaffale -------> value :: string
+    | nome -----------> value :: string
+    | produttore -----> value :: string
+    | unitàMisura ----> value :: string
+    | responsabile ---> value :: string
+    | telefono -------> value :: string
+    | quantità -------> value :: integer
+    | prezzo ---------> value :: double
+    | sconto ---------> value :: double
+    | scadenza -------> value :: Date(dd-MM-yyyy)
+  
+  EXAMPLES:
+    $ java Main add nome=prodotto_123 reparto=UTENSILERIA
+    $ java Main add reparto=ALIMENTARE categoria=cat \
+        scaffale=scaf nome=prod produttore=prod \
+        unitàMisura=kg responsabile=Mario telefono=3270451782 \
+        quantità=10 prezzo=1.50 sconto=20 scadenza=30-9-2021
+
+update:
+  $ java Main [ OPTIONS ] update $index [ $field=value [ $field=value [ ... ] ] ]
+
+  $index :: integer
+  $field :: 
+    | reparto --------> value :: Reparto
+    | categoria ------> value :: string
+    | scaffale -------> value :: string
+    | nome -----------> value :: string
+    | produttore -----> value :: string
+    | unitàMisura ----> value :: string
+    | responsabile ---> value :: string
+    | telefono -------> value :: string
+    | quantità -------> value :: integer
+    | prezzo ---------> value :: double
+    | sconto ---------> value :: double
+    | scadenza -------> value :: Date(dd-MM-yyyy)
+  
+  EXAMPLES:
+    $ java Main update 5 nome=prodotto_1234
+    $ java Main update 6 scadenza=30-10-2021
+
+delete:
+  $ java Main [ OPTIONS ] delete $index
+
+  $index :: integer
+
+  EXAMPLES:
+    $ java Main delete 5
+
+
+@Reparto ::
+  | ABBIGLIAMENTO
+  | UTENSILERIA
+  | ALIMENTARE
+  | BAMBINI
+  | BEVANDE
+  | CURA_DELLA_CASA
+  | EDICOLA
+  | ELETTRONICA
+  | IGIENE
+  | PROFUMERIA
+  | PRODOTTI_TIPICI
+
+
+GENERIC EXAMPLES:
+  $ java Main get
+  $ java Main -f altroSupermercato.java get codice 1
+  $ java Main add nome=prodotto_123 reparto=UTENSILERIA
+  $ java Main update 5 nome=prodotto_1234
+  $ java Main delete 12

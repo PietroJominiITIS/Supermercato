@@ -4,7 +4,7 @@ COMPILER = javac
 RUNTIME = java
 
 default:
-	$(COMPILER) CLI.java
+	$(COMPILER) Main.java
 
 clean:
 	rm *.class

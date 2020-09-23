@@ -42,7 +42,7 @@ public class Prodotto {
       SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
       out.add(formatter.format(scadenza.getTime()));
     } else {
-      out.add("");
+      out.add(".");
     }
 
     return out;
@@ -67,7 +67,7 @@ public class Prodotto {
     p.prezzo = (in.get(10).equals("")) ? -1 : Double.parseDouble(in.get(10));
     p.sconto = (in.get(11).equals("")) ? -1 : Double.parseDouble(in.get(11));
 
-    if (!in.get(12).equals("")) {
+    if (!in.get(12).equals(".")) {
       SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
       p.scadenza = new GregorianCalendar();
       try {
@@ -80,6 +80,16 @@ public class Prodotto {
     }
 
     return p;
+  }
+
+  @Override
+  public String toString() {
+    Vector<String> v = this.toVector();
+    for (int i = 0; i < v.size(); i++) {
+      if (v.get(i).equals("") || (i == 12 && v.get(i).equals(".")))
+        v.set(i, "-");
+    }
+    return String.join(" | ", v);
   }
 
 }
