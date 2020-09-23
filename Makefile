@@ -1,8 +1,10 @@
-.PHONY: default
+.PHONY: default clean
 
 COMPILER = javac
 RUNTIME = java
 
 default:
-	@$(COMPILER) Main.java
-	@$(RUNTIME) Main
+	$(COMPILER) CLI.java
+
+clean:
+	rm *.class
